@@ -8,9 +8,9 @@ class Recipe(Base):
     __tablename__ = "recipes"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    sandwich_id = Column(Integer, ForeignKey("sandwiches.id"))
-    resource_id = Column(Integer, ForeignKey("resources.id"))
-    amount = Column(Integer, index=True, nullable=False, server_default='0.0')
+    menu_item = Column(Integer, ForeignKey("menu_items.id", ondelete="CASCADE"), nullable=False)
+    resource_id = Column(Integer, ForeignKey("resources.id", ondelete="RESTRICT"), nullable=False)
+    amount = Column(Integer, nullable=False, server_default='0.0')
 
-    sandwich = relationship("Sandwich", back_populates="recipes")
+    sandwich = relationship("MenuItem", back_populates="recipes")
     resource = relationship("Resource", back_populates="recipes")
